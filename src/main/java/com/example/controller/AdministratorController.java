@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 /**
- * 管理者関連の処理の制御を行うコントローラー
+ * 管理者関連の処理の制御を行うコントローラー.
  * */
 @Controller
 @RequestMapping("/administrator")

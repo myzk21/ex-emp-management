@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * employeesテーブルを操作するテーブル
+ * employeesテーブルを操作するテーブル.
  * */
 @Repository
 public class EmployeeRepository {

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * ログイン時に使用するフォーム
+ * ログイン時に使用するフォーム.
  * */
 public class LoginForm {
     /** メールアドレス*/

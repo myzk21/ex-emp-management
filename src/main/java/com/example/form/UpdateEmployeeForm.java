@@ -3,7 +3,7 @@ package com.example.form;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- * 従業員更新時時に使用するフォーム
+ * 従業員更新時時に使用するフォーム.
  * */
 public class UpdateEmployeeForm {
     /**扶養人数*/

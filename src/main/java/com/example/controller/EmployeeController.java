@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 /**
- * 従業員関連機能の処理の制御を行うコントローラー
+ * 従業員関連機能の処理の制御を行うコントローラー.
  * */
 @Controller
 @RequestMapping("/employee")

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * administratorsテーブルを操作するテーブル
+ * administratorsテーブルを操作するテーブル.
  * */
 @Repository
 public class AdministratorRepository {

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 管理者登録時に使用するフォーム
+ * 管理者登録時に使用するフォーム.
  * */
 public class InsertAdministratorForm {
     /**管理者名*/
