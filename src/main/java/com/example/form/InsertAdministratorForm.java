@@ -8,15 +8,16 @@ import lombok.Setter;
 /**
  * 管理者登録時に使用するフォーム
  * */
-//@Getter
-//@Setter
 public class InsertAdministratorForm {
+    /**管理者名*/
     @NotBlank(message="名前は必須です")
     private String name;
 
+    /**メールアドレス*/
     @NotBlank(message="メールアドレス")
     private String mailAddress;
 
+    /**パスワード*/
     @NotBlank(message="パスワード")
     private String password;
 

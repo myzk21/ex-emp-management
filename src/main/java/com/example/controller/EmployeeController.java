@@ -22,9 +22,15 @@ import java.util.List;
 @RequestMapping("/employee")
 public class EmployeeController {
 
+    /** 従業員に関する業務処理を行うサービス*/
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * 従業員リストを表示.
+     * @param model リクエストスコープ
+     * @return 従業員リスト画面
+     * */
     @GetMapping("/showList")
     public String index(Model model) {
         List<Employee> employeeList = employeeService.findAll();
@@ -33,6 +39,13 @@ public class EmployeeController {
         return "employee/list";
     }
 
+    /**
+     * 従業員詳細情報を表示.
+     * @param id employeesテーブルの主キー
+     * @param model リクエストスコープ
+     * @param updateEmployeeForm 更新フォームの値
+     * @return 従業員詳細画面
+     * */
     @GetMapping("/showDetail")
     public String showDetail(int id, Model model, UpdateEmployeeForm updateEmployeeForm) {
         Employee employee = employeeService.findById(id);
@@ -40,6 +53,14 @@ public class EmployeeController {
         return "employee/detail";
     }
 
+    /**
+     * 従業員詳細情報を更新.
+     * @param updateEmployeeForm 更新フォームの値
+     * @param result バリデーション後の従業員情報
+     * @param id employeesテーブルの主キー
+     * @param model リクエストスコープ
+     * @return 更新処理に成功した場合に従業員一覧画面を表示。失敗したら従業員詳細を表示
+     * */
     @PostMapping("/update")
     public String update(@Validated UpdateEmployeeForm updateEmployeeForm, BindingResult result, int id, Model model) {
         if (result.hasErrors()) {

@@ -19,7 +19,6 @@ import java.util.List;
  * */
 @Repository
 public class EmployeeRepository {
-
     @Autowired
     private NamedParameterJdbcTemplate template;
 
@@ -28,6 +27,10 @@ public class EmployeeRepository {
      */
     private static final RowMapper<Employee> EMPLOYEE_ROW_MAPPER =  new BeanPropertyRowMapper<>(Employee.class);
 
+    /**
+     * 全ての従業員情報を取得.
+     * @return 全ての従業員情報
+     * */
     public List<Employee> findAll() {
         String sql = """
                 SELECT
@@ -51,6 +54,11 @@ public class EmployeeRepository {
         return template.query(sql, EMPLOYEE_ROW_MAPPER);
     }
 
+    /**
+     * 一件の従業員情報を取得.
+     * @param id 検索に使用する主キーの値
+     * @return 取得した一件の従業員情報
+     * */
     public Employee findById(int id) {
         String sql = """
                 SELECT
@@ -75,6 +83,12 @@ public class EmployeeRepository {
         return template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
     }
 
+    /**
+     * 特定の従業員情報を更新.
+     * @param id 検索に使用する主キーの値
+     * @param dependentsCount 更新する値（扶養人数）
+     * @return 更新したデータ数
+     * */
     public int update(int id, int dependentsCount) {
         String sql = """
                 UPDATE

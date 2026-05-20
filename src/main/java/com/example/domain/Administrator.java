@@ -5,14 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Getter
-//@Setter
+/**
+ *  管理者情報を表すドメイン.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 public class Administrator {
+
+    /** 主キー*/
     private Integer id;
+
+    /** 管理者名*/
     private String name;
+
+    /** メールアドレス*/
     private String mailAddress;
+
+    /** パスワード*/
     private String password;
 
     public Integer getId() {

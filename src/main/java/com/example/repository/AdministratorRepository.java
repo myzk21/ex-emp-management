@@ -21,7 +21,6 @@ import java.util.Optional;
 @Repository
 public class AdministratorRepository {
 
-
     @Autowired
     private NamedParameterJdbcTemplate template;
 
@@ -30,6 +29,11 @@ public class AdministratorRepository {
      */
     private static final RowMapper<Administrator> ADMINISTRATOR_ROW_MAPPER =  new BeanPropertyRowMapper<>(Administrator.class);
 
+    /**
+     * ログイン.
+     * @param administrator 管理者ドメイン
+     * @return 取得した管理者情報
+     * */
     public Administrator login(Administrator administrator) {
 
         String sql = """
@@ -49,6 +53,11 @@ public class AdministratorRepository {
         return template.queryForObject(sql, param, ADMINISTRATOR_ROW_MAPPER);
     }
 
+    /**
+     * 新しい従業員情報を保存.
+     * @param administrator 管理者ドメイン
+     * @return 更新した件数
+     * */
     public int save(Administrator administrator) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
         String sql = """

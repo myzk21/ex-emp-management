@@ -7,9 +7,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
-
-//@Getter
-//@Setter
+/**
+ *  従業員情報を表すドメイン.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
@@ -17,28 +17,28 @@ public class Employee {
     /** 主キー*/
     private Integer id;
 
-    //** 名前*/
+    /**  名前*/
     private String name;
 
-    //** 画像*/
+    /** 画像*/
     private String image;
 
-    //** 性別*/
+    /** 性別*/
     private String gender;
 
-    //** 入社日*/
+    /** 入社日*/
     private Date hireDate;
 
-    //** メールアドレス*/
+    /** メールアドレス*/
     private String mailAddress;
 
-    //** 郵便番号*/
+    /** 郵便番号*/
     private String zipCode;
 
-    //** 住所*/
+    /** 住所*/
     private String address;
 
-    //** 電話番号*/
+    /** 電話番号*/
     private String telephone;
 
     @Override

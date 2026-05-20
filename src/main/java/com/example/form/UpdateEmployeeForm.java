@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotBlank;
  * 従業員更新時時に使用するフォーム
  * */
 public class UpdateEmployeeForm {
-    @NotBlank(message="不要人数は必須です")
+    /**扶養人数*/
+    @NotBlank(message="扶養人数は必須です")
     private String dependentsCount;
 
     public String getDependentsCount() {
