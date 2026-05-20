@@ -74,4 +74,17 @@ public class EmployeeRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         return template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
     }
+
+    public int update(int id, int dependentsCount) {
+        String sql = """
+                UPDATE
+                    employees
+                SET
+                    dependents_count = :dependentsCount
+                WHERE
+                    id = :id;
+                """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("dependentsCount", dependentsCount).addValue("id", id);
+        return template.update(sql, param);
+    }
 }

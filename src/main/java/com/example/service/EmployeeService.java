@@ -19,4 +19,8 @@ public class EmployeeService {
     public Employee findById(int id) {
         return employeeRepository.findById(id);
     }
+
+    public int update(int id, int dependentsCount) {
+        return employeeRepository.update(id, dependentsCount);
+    }
 }
