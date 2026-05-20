@@ -48,4 +48,14 @@ public class AdministratorRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", administrator.getMailAddress()).addValue("password", administrator.getPassword());
         return template.queryForObject(sql, param, ADMINISTRATOR_ROW_MAPPER);
     }
+
+    public int save(Administrator administrator) {
+        SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
+        String sql = """
+                INSERT INTO
+                    administrators(name, mail_address, password)
+                VALUES(:name, :mailAddress, :password);
+                """;
+        return template.update(sql, param);
+    }
 }

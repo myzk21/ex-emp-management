@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.domain.Administrator;
+import com.example.form.InsertAdministratorForm;
 import com.example.form.LoginForm;
 import com.example.service.AdministratorService;
 import jakarta.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 管理者関連の処理の制御を行うコントローラー
  * */
 @Controller
-@RequestMapping("/loginForm")
+@RequestMapping("/administrator")
 public class AdministratorController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class AdministratorController {
     @Autowired
     private HttpSession session;
 
-    @GetMapping("")
+    @GetMapping("/loginForm")
     public String index(LoginForm loginForm) {
         return "administrator/login";
     }
@@ -53,4 +54,24 @@ public class AdministratorController {
             return "administrator/login";
         }
     }
+
+    @GetMapping("/registerForm")
+    public String registerForm(InsertAdministratorForm insertAdministratorForm) {
+        return "administrator/insert";
+    }
+
+    @PostMapping("/save")
+    public String administratorForm(@Validated InsertAdministratorForm insertAdministratorForm, BindingResult result) {
+        if (result.hasErrors()) {
+            return registerForm(insertAdministratorForm);
+        }
+
+        Administrator administrator = new Administrator();
+        BeanUtils.copyProperties(insertAdministratorForm, administrator);
+
+        service.save(administrator);
+        return "redirect:/administrator/loginForm";
+    }
+
+
 }

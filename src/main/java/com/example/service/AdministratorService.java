@@ -18,4 +18,9 @@ public class AdministratorService {
     public Administrator login(Administrator administrator) {
         return repository.login(administrator);
     }
+
+    public int save(Administrator administrator) {
+        return repository.save(administrator);
+    }
+
 }
