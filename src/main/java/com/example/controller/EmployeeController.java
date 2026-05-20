@@ -1,18 +1,31 @@
 package com.example.controller;
 
+import com.example.domain.Employee;
+import com.example.service.EmployeeService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * 従業員関連機能の処理の制御を行うコントローラー
  * */
 @Controller
-@RequestMapping("/employeeTest")
+@RequestMapping("/employee")
 public class EmployeeController {
 
-    @GetMapping("")
-    public String index() {
+    @Autowired
+    private EmployeeService employeeService;
+
+    @GetMapping("/showList")
+    public String index(Model model) {
+        List<Employee> employeeList = employeeService.findAll();
+        model.addAttribute("employeeList", employeeList);
+
         return "employee/list";
     }
 }

@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.domain.Administrator;
 import com.example.form.LoginForm;
 import com.example.service.AdministratorService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -25,13 +26,16 @@ public class AdministratorController {
     @Autowired
     private AdministratorService service;
 
+    @Autowired
+    private HttpSession session;
+
     @GetMapping("")
     public String index(LoginForm loginForm) {
         return "administrator/login";
     }
 
     @PostMapping("/login")
-    public String login(@Validated LoginForm loginForm, BindingResult result, Model model) {
+    public String login(@Validated LoginForm loginForm, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             return index(loginForm);
         }
@@ -39,9 +43,12 @@ public class AdministratorController {
         Administrator administrator = new Administrator();
         BeanUtils.copyProperties(loginForm, administrator);
         try {
-            service.login(administrator);
-            return "redirect:/employeeList";
+            Administrator loggedInAdministrator = service.login(administrator);
+            session.setAttribute("administratorName", loggedInAdministrator.getName());
+
+            return "redirect:/employee/showList";
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             model.addAttribute("isLoginFailed", true);
             return "administrator/login";
         }

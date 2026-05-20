@@ -31,7 +31,6 @@ public class AdministratorRepository {
     private static final RowMapper<Administrator> ADMINISTRATOR_ROW_MAPPER =  new BeanPropertyRowMapper<>(Administrator.class);
 
     public Administrator login(Administrator administrator) {
-        SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
 
         String sql = """
                 SELECT
@@ -42,8 +41,11 @@ public class AdministratorRepository {
                 FROM
                     administrators
                 WHERE
-                    id = :id;
+                    mail_address = :mailAddress
+                AND
+                    password = :password;
                 """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", administrator.getMailAddress()).addValue("password", administrator.getPassword());
         return template.queryForObject(sql, param, ADMINISTRATOR_ROW_MAPPER);
     }
 }
