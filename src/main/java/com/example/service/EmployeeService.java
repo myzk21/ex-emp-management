@@ -37,9 +37,8 @@ public class EmployeeService {
      * 一件の従業員情報を更新.
      * @param id 検索に使用するemployeesの主キー
      * @param dependentsCount 更新する値（扶養人数）
-     * @return 更新したデータ数
      * */
-    public int update(int id, int dependentsCount) {
-        return employeeRepository.update(id, dependentsCount);
+    public void update(int id, int dependentsCount) {
+        employeeRepository.update(id, dependentsCount);
     }
 }

@@ -31,10 +31,9 @@ public class AdministratorService {
     /**
      * 従業員情報を登録.
      * @param administrator 従業員情報
-     * @return 更新した件数
      * */
-    public int save(Administrator administrator) {
-        return repository.save(administrator);
+    public void save(Administrator administrator) {
+        repository.save(administrator);
     }
 
 }

@@ -59,7 +59,6 @@ public class EmployeeController {
      * @param result バリデーション後の従業員情報
      * @param id employeesテーブルの主キー
      * @param model リクエストスコープ
-     * @return 更新処理に成功した場合に従業員一覧画面を表示。失敗したら従業員詳細を表示
      * */
     @PostMapping("/update")
     public String update(@Validated UpdateEmployeeForm updateEmployeeForm, BindingResult result, int id, Model model) {

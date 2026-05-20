@@ -56,15 +56,14 @@ public class AdministratorRepository {
     /**
      * 新しい従業員情報を保存.
      * @param administrator 管理者ドメイン
-     * @return 更新した件数
      * */
-    public int save(Administrator administrator) {
+    public void save(Administrator administrator) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
         String sql = """
                 INSERT INTO
                     administrators(name, mail_address, password)
                 VALUES(:name, :mailAddress, :password);
                 """;
-        return template.update(sql, param);
+        template.update(sql, param);
     }
 }

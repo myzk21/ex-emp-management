@@ -87,9 +87,8 @@ public class EmployeeRepository {
      * 特定の従業員情報を更新.
      * @param id 検索に使用する主キーの値
      * @param dependentsCount 更新する値（扶養人数）
-     * @return 更新したデータ数
      * */
-    public int update(int id, int dependentsCount) {
+    public void update(int id, int dependentsCount) {
         String sql = """
                 UPDATE
                     employees
@@ -99,6 +98,6 @@ public class EmployeeRepository {
                     id = :id;
                 """;
         SqlParameterSource param = new MapSqlParameterSource().addValue("dependentsCount", dependentsCount).addValue("id", id);
-        return template.update(sql, param);
+        template.update(sql, param);
     }
 }
