@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * administratorsテーブルを操作するテーブル
@@ -36,7 +37,7 @@ public class AdministratorRepository {
                 SELECT
                     id,
                     name,
-                    mailAddress,
+                    mail_address,
                     password
                 FROM
                     administrators

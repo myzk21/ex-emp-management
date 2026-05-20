@@ -31,20 +31,20 @@ public class AdministratorController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated LoginForm loginForm, BindingResult result) {
+    public String login(@Validated LoginForm loginForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return index(loginForm);
         }
         //ログインチェックを行う
         Administrator administrator = new Administrator();
         BeanUtils.copyProperties(loginForm, administrator);
-        Administrator loggedInAdministrator = service.login(administrator);
-
-        if (loggedInAdministrator == null) {
-            return "redirect:index";
-            //エラーを表示する必要がある
+        try {
+            service.login(administrator);
+            return "redirect:/employeeList";
+        } catch (Exception e) {
+            model.addAttribute("isLoginFailed", true);
+            return "administrator/login";
         }
-        return "redirect:/employeeList";
     }
 
 }
