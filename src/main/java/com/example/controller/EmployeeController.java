@@ -28,4 +28,17 @@ public class EmployeeController {
 
         return "employee/list";
     }
+
+    @GetMapping("/showDetail")
+    public String showDetail(int id, Model model) {
+        Employee employee = employeeService.findById(id);
+        model.addAttribute("employee", employee);
+        return "employee/detail";
+    }
+
+    @GetMapping("/update")
+    public String update(int id) {
+        
+        return "redirect:/employee/showList";
+    }
 }

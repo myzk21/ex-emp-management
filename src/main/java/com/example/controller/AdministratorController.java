@@ -53,5 +53,4 @@ public class AdministratorController {
             return "administrator/login";
         }
     }
-
 }

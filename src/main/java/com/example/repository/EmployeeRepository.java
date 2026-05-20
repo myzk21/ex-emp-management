@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -48,5 +49,29 @@ public class EmployeeRepository {
                     name;
                 """;
         return template.query(sql, EMPLOYEE_ROW_MAPPER);
+    }
+
+    public Employee findById(int id) {
+        String sql = """
+                SELECT
+                    id,
+                    name,
+                    image,
+                    gender,
+                    hire_date,
+                    mail_address,
+                    zip_code,
+                    address,
+                    telephone,
+                    salary,
+                    characteristics,
+                    dependents_count
+                FROM
+                    employees
+                WHERE
+                    id = :id;
+                """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        return template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
     }
 }
