@@ -152,22 +152,18 @@
                   <tr>
                     <th nowrap>特性</th>
                     <td>
-                      <span th:text="${employee.characteristics}"
-                      >明るく素直な性格です。リーダーシップを発揮します。新卒社員研修の時はグループ開発の時にリーダーを買ってでました。積極性も人間性も抜群です。周りに対する不満も聞いたことがありません。</span
-                      >
+                      <p th:errors="*{characteristics}" class="text-danger"></p>
+                      <textarea
+                              name="characteristics"
+                              id="characteristics"
+                              class="form-control"
+                              th:text="${employee.characteristics}"
+                      ></textarea>
                     </td>
                   </tr>
                   <tr>
                     <th nowrap>扶養人数</th>
                     <td>
-                      <label class="error-messages">
-                        扶養人数を入力してください
-                      </label>
-                      <label
-                              class="control-label"
-                              style="color: red"
-                              for="dependentsCount"
-                      ></label>
                       <input type="hidden" name="id" />
 
                       <p th:errors="*{dependentsCount}" class="text-danger"></p>

@@ -66,7 +66,7 @@ public class EmployeeController {
             return showDetail(id, model, updateEmployeeForm);
         }
 
-        employeeService.updateDependentsCount(id, Integer.parseInt(updateEmployeeForm.getDependentsCount()));
+        employeeService.updateDependentsCount(id, Integer.parseInt(updateEmployeeForm.getDependentsCount()), updateEmployeeForm.getCharacteristics());
         return "redirect:/employee/showList";
     }
 }

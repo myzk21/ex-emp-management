@@ -90,16 +90,17 @@ public class EmployeeRepository {
      * @param id 検索に使用する主キーの値
      * @param dependentsCount 更新する値（扶養人数）
      * */
-    public void updateDependentsCount(int id, int dependentsCount) {
+    public void updateDependentsCountAndCharacteristics(int id, int dependentsCount, String characteristics) {
         String sql = """
                 UPDATE
                     employees
                 SET
-                    dependents_count = :dependentsCount
+                    dependents_count = :dependentsCount,
+                    characteristics = :characteristics
                 WHERE
                     id = :id;
                 """;
-        SqlParameterSource param = new MapSqlParameterSource().addValue("dependentsCount", dependentsCount).addValue("id", id);
+        SqlParameterSource param = new MapSqlParameterSource().addValue("dependentsCount", dependentsCount).addValue("characteristics", characteristics).addValue("id", id);
         template.update(sql, param);
     }
 }

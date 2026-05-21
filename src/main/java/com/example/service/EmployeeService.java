@@ -40,7 +40,7 @@ public class EmployeeService {
      * @param id 検索に使用するemployeesの主キー
      * @param dependentsCount 更新する値（扶養人数）
      * */
-    public void updateDependentsCount(int id, int dependentsCount) {
-        employeeRepository.updateDependentsCount(id, dependentsCount);
+    public void updateDependentsCount(int id, int dependentsCount, String characteristics) {
+        employeeRepository.updateDependentsCountAndCharacteristics(id, dependentsCount, characteristics);
     }
 }
