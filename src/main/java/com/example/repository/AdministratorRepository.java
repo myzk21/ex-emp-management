@@ -69,4 +69,24 @@ public class AdministratorRepository {
                 """;
         template.update(sql, param);
     }
+
+    /**
+     * 従業員情報を更新する.
+     *
+     * @param administrator 管理者情報
+     * */
+    public void update(Administrator administrator) {
+        String sql = """
+                UPDATE
+                    administrators
+                SET
+                    name = :name,
+                    mail_address = :mailAddress,
+                    password = :password
+                WHERE
+                    id = :id;
+                """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", administrator.getName()).addValue("mailAddress", administrator.getMailAddress()).addValue("password", administrator.getPassword()).addValue("id", administrator.getId());
+        template.update(sql, param);
+    }
 }

@@ -5,6 +5,7 @@ import com.example.domain.Employee;
 import com.example.form.UpdateEmployeeForm;
 import com.example.service.EmployeeService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +58,10 @@ public class EmployeeController {
     @GetMapping("/showDetail")
     public String showDetail(int id, Model model, UpdateEmployeeForm updateEmployeeForm) {
         Employee employee = employeeService.showDetail(id);
+//        BeanUtils.copyProperties(updateEmployeeForm, employee);
+        updateEmployeeForm.setId(employee.getId());
+        updateEmployeeForm.setCharacteristics(employee.getCharacteristics());
+        updateEmployeeForm.setDependentsCount(String.valueOf(employee.getDependentsCount()));
         model.addAttribute("employee", employee);
         return "employee/detail";
     }
@@ -65,16 +70,15 @@ public class EmployeeController {
      * 従業員詳細情報を更新.
      * @param updateEmployeeForm 更新フォームの値
      * @param result バリデーション後の従業員情報
-     * @param id employeesテーブルの主キー
      * @param model リクエストスコープ
      * */
     @PostMapping("/updateDependentsCount")
-    public String updateDependentsCount(@Validated UpdateEmployeeForm updateEmployeeForm, BindingResult result, int id, Model model) {
+    public String updateDependentsCount(@Validated UpdateEmployeeForm updateEmployeeForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return showDetail(id, model, updateEmployeeForm);
+            return showDetail(updateEmployeeForm.getId(), model, updateEmployeeForm);
         }
 
-        employeeService.updateDependentsCount(id, Integer.parseInt(updateEmployeeForm.getDependentsCount()), updateEmployeeForm.getCharacteristics());
+        employeeService.updateDependentsCount(updateEmployeeForm.getId(), Integer.parseInt(updateEmployeeForm.getDependentsCount()), updateEmployeeForm.getCharacteristics());
         return "redirect:/employee/showList";
     }
 }

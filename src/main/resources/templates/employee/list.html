@@ -58,14 +58,14 @@
             <ul class="nav navbar-nav">
               <li class="active"><a href="list.html" th:href="@{/employee/showList}">従業員管理</a></li>
             </ul>
-            <p class="navbar-text navbar-right">
+            <a class="navbar-text navbar-right" th:href="@{/administrator/toUpdate}">
               <span th:text="${session.administratorName + 'さん'}"
                 >山田さん</span
               >こんにちは！ &nbsp;&nbsp;&nbsp;
               <a href="../administrator/login.html" class="navbar-link" th:href="@{/administrator/logout}"
                 >ログアウト</a
               >
-            </p>
+            </a>
           </div>
           <!-- /.navbar-collapse -->
         </div>

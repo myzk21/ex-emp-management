@@ -59,7 +59,7 @@
               <li class="active"><a href="list.html">従業員管理</a></li>
             </ul>
             <p class="navbar-text navbar-right">
-              <span th:text="${session.administratorName + 'さん'}"
+              <span th:field="${session.administratorName + 'さん'}"
                 >山田さん</span
               >こんにちは！ &nbsp;&nbsp;&nbsp;
               <a href="../administrator/login.html" class="navbar-link"
@@ -90,7 +90,7 @@
             <!-- ここから上を編集する必要はありません -->
 
             <!-- ここにモックのform要素を貼り付けます -->
-            <form method="post" action="list.html" th:action="@{/employee/updateDependentsCount?id=} + ${employee.id}" th:object="${updateEmployeeForm}">
+            <form method="post" action="list.html" th:action="@{/employee/updateDependentsCount}" th:object="${updateEmployeeForm}">
               <fieldset>
                 <legend>従業員情報</legend>
                 <table class="table table-striped">
@@ -146,7 +146,7 @@
                   <tr>
                     <th nowrap>給料</th>
                     <td>
-                      <span th:text="${#numbers.formatInteger(employee.salary, 1, 'COMMA')}">400000円</span>円
+                      <span th:text="${employee.#numbers.formatInteger(salary, 1, 'COMMA')}">400000円</span>円
                     </td>
                   </tr>
                   <tr>
@@ -157,23 +157,37 @@
                               name="characteristics"
                               id="characteristics"
                               class="form-control"
-                              th:text="${employee.characteristics}"
+                              th:field="*{characteristics}"
                       ></textarea>
+<!--                      <textarea-->
+<!--                              name="characteristics"-->
+<!--                              id="characteristics"-->
+<!--                              class="form-control"-->
+<!--                              th:field="${employee.characteristics}"-->
+<!--                      ></textarea>-->
                     </td>
                   </tr>
                   <tr>
                     <th nowrap>扶養人数</th>
                     <td>
-                      <input type="hidden" name="id" />
+                      <input type="hidden" name="id" th:field="*{id}" />
 
                       <p th:errors="*{dependentsCount}" class="text-danger"></p>
+<!--                      <input-->
+<!--                              type="text"-->
+<!--                              name="dependentsCount"-->
+<!--                              id="dependentsCount"-->
+<!--                              class="form-control"-->
+<!--                              value="3"-->
+<!--                              th:value="${employee.dependentsCount}"-->
+<!--                      />-->
                       <input
                               type="text"
                               name="dependentsCount"
                               id="dependentsCount"
                               class="form-control"
                               value="3"
-                              th:value="${employee.dependentsCount}"
+                              th:field="*{dependentsCount}"
                       />
                     </td>
                   </tr>

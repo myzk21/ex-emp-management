@@ -3,6 +3,8 @@ package com.example.controller;
 import com.example.domain.Administrator;
 import com.example.form.InsertAdministratorForm;
 import com.example.form.LoginForm;
+import com.example.form.UpdateAdministratorForm;
+import com.example.repository.AdministratorRepository;
 import com.example.service.AdministratorService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +33,9 @@ public class AdministratorController {
     /** セッション*/
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private AdministratorRepository repository;
 
     /**
      * ログイン画面を表示.
@@ -62,6 +67,8 @@ public class AdministratorController {
         try {
             Administrator loggedInAdministrator = service.login(mailAddress, password);
             session.setAttribute("administratorName", loggedInAdministrator.getName());
+            System.out.println("ログインユーザーのID" + loggedInAdministrator.getId());
+
             session.setAttribute("loggedInAdministrator", loggedInAdministrator);
             return "redirect:/employee/showList";
         } catch (Exception e) {
@@ -103,5 +110,40 @@ public class AdministratorController {
     public String logout() {
         session.removeAttribute("loggedInAdministrator");
         return "redirect:/administrator/toLogin";
+    }
+
+    @GetMapping("/toUpdate")
+    public String toUpdate(UpdateAdministratorForm updateAdministratorForm, Model model) {
+        Administrator administrator = (Administrator) session.getAttribute("loggedInAdministrator");
+        model.addAttribute("administrator", administrator);
+
+        return "administrator/update";
+    }
+
+    /**
+     * 管理者情報を更新する
+     *
+     * @param updateAdministratorForm 管理者クラスのフォームクラス
+     * @param result バリデーション結果
+     * @param id 管理者ID
+     * @param model リクエストスコープ
+     * @return 従業員リストを表示
+     *
+     * */
+    @PostMapping("/update")
+    public String update(@Validated UpdateAdministratorForm updateAdministratorForm, BindingResult result, int id, Model model, HttpSession session) {
+
+        if (result.hasErrors()) {
+            return toUpdate(updateAdministratorForm, model);
+        }
+
+        Administrator administrator  = new Administrator();
+        BeanUtils.copyProperties(updateAdministratorForm, administrator);
+        model.addAttribute("administrator", administrator);
+        repository.update(administrator);
+
+        session.setAttribute("administratorName", administrator.getName());
+
+        return "redirect:/employee/showList";
     }
 }
