@@ -33,30 +33,34 @@ public class AdministratorController {
     private HttpSession session;
 
     /**
-     * ログインフォームを表示.
+     * ログイン画面を表示.
+     *
      * @param loginForm ログイン用のフォームクラス
-     * @return ログインフォーム画面
+     * @return ログイン画面
      * */
-    @GetMapping("/loginForm")
-    public String index(LoginForm loginForm) {
+    @GetMapping("/toLogin")
+    public String toLogin(LoginForm loginForm) {
         return "administrator/login";
     }
 
     /**
      * ログインする.
+     *
      * @param loginForm ログイン用のフォームクラス
-     * @return ログインに成功した場合にログインフォームを返し、失敗した場合に従業員リスト画面へリダイレクト
+     * @return ログインに成功時→ログイン画面　ログイン失敗時→従業員リスト画面
      * */
     @PostMapping("/login")
     public String login(@Validated LoginForm loginForm, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            return index(loginForm);
+            return toLogin(loginForm);
         }
+
+        String mailAddress = loginForm.getMailAddress();
+        String password = loginForm.getPassword();
+
         //ログインチェックを行う
-        Administrator administrator = new Administrator();
-        BeanUtils.copyProperties(loginForm, administrator);
         try {
-            Administrator loggedInAdministrator = service.login(administrator);
+            Administrator loggedInAdministrator = service.login(mailAddress, password);
             session.setAttribute("administratorName", loggedInAdministrator.getName());
 
             return "redirect:/employee/showList";
@@ -71,8 +75,8 @@ public class AdministratorController {
      * @param insertAdministratorForm 従業位登録用のフォームクラス
      * @return 従業員登録画面
      * */
-    @GetMapping("/registerForm")
-    public String registerForm(InsertAdministratorForm insertAdministratorForm) {
+    @GetMapping("/toInsert")
+    public String toInsert(InsertAdministratorForm insertAdministratorForm) {
         return "administrator/insert";
     }
 
@@ -82,17 +86,17 @@ public class AdministratorController {
      * @param result バリデーション後の値
      * @return ログインフォーム画面
      * */
-    @PostMapping("/save")
-    public String administratorForm(@Validated InsertAdministratorForm insertAdministratorForm, BindingResult result) {
+    @PostMapping("/insert")
+    public String insert(@Validated InsertAdministratorForm insertAdministratorForm, BindingResult result) {
         if (result.hasErrors()) {
-            return registerForm(insertAdministratorForm);
+            return toInsert(insertAdministratorForm);
         }
 
         Administrator administrator = new Administrator();
         BeanUtils.copyProperties(insertAdministratorForm, administrator);
 
-        service.save(administrator);
-        return "redirect:/administrator/loginForm";
+        service.insert(administrator);
+        return "redirect:/administrator/toLogin";
     }
 
 

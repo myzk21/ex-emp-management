@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * administratorsテーブルを操作するテーブル.
+ * administratorsテーブルを操作するリポジトリ.
  * */
 @Repository
 public class AdministratorRepository {
@@ -31,10 +31,12 @@ public class AdministratorRepository {
 
     /**
      * ログイン.
-     * @param administrator 管理者ドメイン
+     *
+     * @param mailAddress メールアドレス
+     * @param password パスワード
      * @return 取得した管理者情報
      * */
-    public Administrator login(Administrator administrator) {
+    public Administrator findByMailAddressAndPassword(String mailAddress, String password) {
 
         String sql = """
                 SELECT
@@ -49,15 +51,16 @@ public class AdministratorRepository {
                 AND
                     password = :password;
                 """;
-        SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", administrator.getMailAddress()).addValue("password", administrator.getPassword());
+        SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", mailAddress).addValue("password", password);
         return template.queryForObject(sql, param, ADMINISTRATOR_ROW_MAPPER);
     }
 
     /**
-     * 新しい従業員情報を保存.
-     * @param administrator 管理者ドメイン
+     * 従業員情報を保存する.
+     *
+     * @param administrator 管理者情報
      * */
-    public void save(Administrator administrator) {
+    public void insert(Administrator administrator) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
         String sql = """
                 INSERT INTO

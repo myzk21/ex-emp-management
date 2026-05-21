@@ -29,6 +29,7 @@ public class EmployeeRepository {
 
     /**
      * 全ての従業員情報を取得.
+     *
      * @return 全ての従業員情報
      * */
     public List<Employee> findAll() {
@@ -56,8 +57,9 @@ public class EmployeeRepository {
 
     /**
      * 一件の従業員情報を取得.
-     * @param id 検索に使用する主キーの値
-     * @return 取得した一件の従業員情報
+     *
+     * @param id ID
+     * @return 従業員情報
      * */
     public Employee findById(int id) {
         String sql = """
@@ -88,7 +90,7 @@ public class EmployeeRepository {
      * @param id 検索に使用する主キーの値
      * @param dependentsCount 更新する値（扶養人数）
      * */
-    public void update(int id, int dependentsCount) {
+    public void updateDependentsCount(int id, int dependentsCount) {
         String sql = """
                 UPDATE
                     employees

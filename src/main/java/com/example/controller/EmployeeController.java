@@ -32,8 +32,8 @@ public class EmployeeController {
      * @return 従業員リスト画面
      * */
     @GetMapping("/showList")
-    public String index(Model model) {
-        List<Employee> employeeList = employeeService.findAll();
+    public String showEmployeeList(Model model) {
+        List<Employee> employeeList = employeeService.showEmployeeList();
         model.addAttribute("employeeList", employeeList);
 
         return "employee/list";
@@ -48,7 +48,7 @@ public class EmployeeController {
      * */
     @GetMapping("/showDetail")
     public String showDetail(int id, Model model, UpdateEmployeeForm updateEmployeeForm) {
-        Employee employee = employeeService.findById(id);
+        Employee employee = employeeService.showDetail(id);
         model.addAttribute("employee", employee);
         return "employee/detail";
     }
@@ -60,13 +60,13 @@ public class EmployeeController {
      * @param id employeesテーブルの主キー
      * @param model リクエストスコープ
      * */
-    @PostMapping("/update")
-    public String update(@Validated UpdateEmployeeForm updateEmployeeForm, BindingResult result, int id, Model model) {
+    @PostMapping("/updateDependentsCount")
+    public String updateDependentsCount(@Validated UpdateEmployeeForm updateEmployeeForm, BindingResult result, int id, Model model) {
         if (result.hasErrors()) {
             return showDetail(id, model, updateEmployeeForm);
         }
 
-        employeeService.update(id, Integer.parseInt(updateEmployeeForm.getDependentsCount()));
+        employeeService.updateDependentsCount(id, Integer.parseInt(updateEmployeeForm.getDependentsCount()));
         return "redirect:/employee/showList";
     }
 }
