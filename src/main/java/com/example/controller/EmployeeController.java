@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.domain.Administrator;
 import com.example.domain.Employee;
 import com.example.form.UpdateEmployeeForm;
 import com.example.service.EmployeeService;
@@ -26,6 +27,10 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    /**セッション*/
+    @Autowired
+    private HttpSession session;
+
     /**
      * 従業員リストを表示.
      * @param model リクエストスコープ
@@ -33,6 +38,9 @@ public class EmployeeController {
      * */
     @GetMapping("/showList")
     public String showEmployeeList(Model model) {
+        if (session.getAttribute("loggedInAdministrator") == null) {
+            return "redirect:/administrator/toLogin";
+        }
         List<Employee> employeeList = employeeService.showEmployeeList();
         model.addAttribute("employeeList", employeeList);
 

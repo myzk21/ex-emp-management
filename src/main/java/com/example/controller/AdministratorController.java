@@ -62,7 +62,7 @@ public class AdministratorController {
         try {
             Administrator loggedInAdministrator = service.login(mailAddress, password);
             session.setAttribute("administratorName", loggedInAdministrator.getName());
-
+            session.setAttribute("loggedInAdministrator", loggedInAdministrator);
             return "redirect:/employee/showList";
         } catch (Exception e) {
             model.addAttribute("isLoginFailed", true);
@@ -99,5 +99,9 @@ public class AdministratorController {
         return "redirect:/administrator/toLogin";
     }
 
-
+    @GetMapping("/logout")
+    public String logout() {
+        session.removeAttribute("loggedInAdministrator");
+        return "redirect:/administrator/toLogin";
+    }
 }
